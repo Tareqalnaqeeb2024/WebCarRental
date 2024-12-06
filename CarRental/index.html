@@ -41,7 +41,7 @@
             <a class="nav-link" href="#">Cars</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Boobings</a>
+            <a class="nav-link" href="#">Bookings</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Users</a>
@@ -144,10 +144,11 @@
   <div class="table-responsive">
 <table id="Mytable" class="row-border stripe">
   <thead>
-      <tr>
+      <tr style="font-size: 10px; text-align: center; margin: auto;">
         <th>Update</th>
         <th>delate</th>
-          <th>Customer ID</th>
+          <th>Customer 
+            ID</th>
           <th>Name</th>
           <th>National ID</th>
           <th>Address</th>
@@ -157,7 +158,7 @@
          
       </tr>
   </thead>
-  <tbody class="tbody">
+  <tbody class="tbody" style=" text-align: center;" >
       <!-- الصفوف ستضاف هنا -->
   </tbody>
 </table>
@@ -237,14 +238,13 @@
  
 
 
-  <div class="Bookings " >
 <div class="container bg-light mt-4">
-    <!-- <button id="toggleFormButton" class="btn btn-primary">إظهار نموذج الحجز</button> -->
-    <!-- <h2 class="text-center" id="titleOfBo">إضافة حجز جديد</h2> -->
-    <!-- <h2 class=" text-bg-dark text-wrap text-center"> List Of Vehicles </h2> -->
-
-    <form id="bookingForm" action="index.html"  method="get" class="search-input bg-light m-5"  class="bg-dark">
-        
+  <div id="bookingForm" class="modal" >
+  
+    <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2> Add New Booking </h2>
+    <form  id="Mytable3">
 
         <div class="form-group">
             <label for="customerId">Customer ID:</label>
@@ -286,13 +286,14 @@
             <label for="initialRentalDays">Initial Rental Days:</label>
             <input type="number" class="form-control" id="initialRentalDays">
         </div>
-        <button type="submit" class="btn btn-primary">Add Booking</button>
+        <button type="submit" id="btnAddBooking" class="btn btn-primary">Add Booking</button>
         
     </form>
     
-</div>
-</div>
 
+</div>
+</div>
+</div>
   <hr style="font-size: large;"  >
   
 
@@ -302,11 +303,12 @@
 
     <div class="table-responsive">
   <table id="Mytable2" class="row-border stripe hover  table is-striped">
-    <thead >
-        <tr >
+    <thead  style="font-size: 10px; ">
+        <tr style="text-align: center;" >
 
             <th>Update</th>
             <th>delete</th>
+            <th>Transaction</th>
           <th >booking
             Id</th>
            <th>customer
@@ -344,11 +346,153 @@
   </div>
 
   <hr style="font-size: large;"  >
- 
-<div class="container mt-4" style="height: 100;" ></div>
 
 
+<div class="container  mt-4 bg-light">
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>إدخال البيانات</h2>
+  
+           
 
+      <form id="transactionForm">
+        <div class="form-group">
+            <label for="bookingId">Booking ID:</label>
+            <input type="number" class="form-control" id="bookingId" required>
+        </div>
+        <div class="form-group">
+            <label for="returnId">Return ID:</label>
+            <input type="number" class="form-control" id="returnId">
+        </div>
+        <div class="form-group">
+            <label for="paymentDetails">Payment Details:</label>
+            <input type="text" class="form-control" id="paymentDetails" required>
+        </div>
+        <div class="form-group">
+            <label for="paidInitialTotalDueAmount">Paid Amount:</label>
+            <input type="number" class="form-control" id="paidInitialTotalDueAmount" required>
+        </div>
+        <div class="form-group">
+            <label for="actualTotalDueAmount">Total Due Amount:</label>
+            <input type="number" class="form-control" id="actualTotalDueAmount" required>
+        </div>
+        <div class="form-group">
+            <label for="totalRemaining">Remaining Amount:</label>
+            <input type="number" class="form-control" id="totalRemaining" required>
+        </div>
+        <div class="form-group">
+            <label for="totalRefunedAmount">Refunded Amount:</label>
+            <input type="number" class="form-control" id="totalRefunedAmount">
+        </div>
+        <div class="form-group">
+            <label for="transactionDate">Transaction Date:</label>
+            <input type="date" class="form-control" id="transactionDate" required>
+        </div>
+        <div class="form-group">
+            <label for="updatedTransactionDate">Updated Transaction Date:</label>
+            <input type="date" class="form-control" id="updatedTransactionDate">
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add Transaction</button>
+      </div>
+    </form>
+      
+      </div>
+</div>
+</div>
+
+
+<!-- <div class="container  mt-4 bg-light">
+  <div id="Vehicle-Modal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>إدخال البيانات</h2>
+    
+             
+  
+        <form id="vehicle-from">
+          <div class="form-group">
+              <label for="VehicleId">VehicleId:</label>
+              <input type="number" class="form-control" id="VehicleId" required>
+          </div>
+          <div class="form-group">
+              <label for="Make">Make</label>
+              <input type="text" class="form-control" id="Make">
+          </div>
+          <div class="form-group">
+              <label for="Model">Model</label>
+              <input type="text" class="form-control" id="Model" required>
+          </div>
+          <div class="form-group">
+              <label for="MadeYear">MadeYear:</label>
+              <input type="number" class="form-control" id="MadeYear" required>
+          </div>
+          <div class="form-group">
+              <label for="Mileage">Mileage :</label>
+              <input type="number" class="form-control" id="Mileage" required>
+          </div>
+          <div class="form-group">
+              <label for="FuleTypeId">FuleTypeId:</label>
+              <input type="number" class="form-control" id="FuleTypeId" required>
+          </div>
+          <div class="form-group">
+              <label for="PlateNumberId">PlateNumberId:</label>
+              <input type="number" class="form-control" id="PlateNumberId">
+          </div>
+          <div class="form-group">
+              <label for="RentalPricePerDay">RentalPricePerDay:</label>
+              <input type="date" class="form-control" id="RentalPricePerDay" required>
+          </div>
+          <div class="form-group">
+              <label for="IsAvailable">IsAvailable:</label>
+              <input type="date" class="form-control" id="IsAvailable">
+          </div>
+          <div class="form-group">
+          <button type="submit" class="btn btn-primary">Add Transaction</button>
+        </div>
+      </form>
+        
+        </div>
+  </div>
+  </div> -->
+
+  <div class="container  mt-4 bg-light">
+  <h1>Add New Vehicle</h1>
+  <form id="vehicleForm">
+      <label for="make">Make:</label>
+      <input type="text" id="make" name="make" required><br><br>
+  
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" required><br><br>
+  
+      <label for="madeYear">Made Year:</label>
+      <input type="number" id="madeYear" name="madeYear" required><br><br>
+  
+      <label for="mileage">Mileage:</label>
+      <input type="number" id="mileage" name="mileage" required><br><br>
+  
+      <label for="fuelType">Fuel Type ID:</label>
+      <input type="number" id="fuelType" name="fuelType" required><br><br>
+  
+      <label for="plateNumber">Plate Number ID:</label>
+      <input type="number" id="plateNumber" name="plateNumber" required><br><br>
+  
+      <label for="rentalPrice">Rental Price Per Day:</label>
+      <input type="number" id="rentalPrice" name="rentalPrice" step="0.01" required><br><br>
+  
+      <label for="availability">Is Available:</label>
+      <select id="availability" name="availability" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+      </select><br><br>
+  
+      <label for="imagePath">Image Path:</label>
+      <input type="text" id="imagePath" name="imagePath"><br><br>
+  
+      <button type="submit">Add Vehicle</button>
+  </form>
+</div>
       <scriptsrc="https://code.jquery.com/jquery-3.7.1.js"></script>
       <script src="./assets/js/bootstrap.bundle.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.7.1.js"></script>

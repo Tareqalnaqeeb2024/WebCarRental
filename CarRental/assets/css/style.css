@@ -230,9 +230,7 @@ th,td {
 }
 
 
-.main-slider .card:hover{
-    transform: scale(1.09);
-}
+
 
 .level-silder-item {
     margin: 10px;
@@ -267,12 +265,6 @@ th,td {
 
 
 
-#bookingForm{
- 
-
-    display: none;
-   
-}
 
 
 
@@ -283,6 +275,11 @@ th,td {
     margin: 10px;
     display: inline-block;
     width: 250px;
+    transition: 0.5s ease-in;
+}
+
+.main-slider .card:hover{
+    transform: scale(1.09);
 }
 .tag {
     background-color: #e0e0e0;
@@ -294,4 +291,91 @@ th,td {
 }
 
 
+#transactionForm , #Mytable3 {
+    display:flex ;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
+h2{
+    text-align: center;
+    background: #111;
+    color: white;
+    border-radius: 20px ;
+}
+
+/* #Mytable3{
+
+    display:flex ;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+} */
+
+
+/* .form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+} */
+
+
+
+.modal {
+    display: none; /* مخفي بشكل افتراضي */
+    position: fixed; /* يبقى في مكانه */
+    z-index: 1; /* فوق كل العناصر الأخرى */
+    left: 0;
+    top: 0;
+    width: 100%; /* عرض كامل */
+    height: 100%; /* ارتفاع كامل */
+    overflow: auto; /* تمكين التمرير إذا لزم الأمر */
+    background-color: rgb(0,0,0); /* لون الخلفية */
+    background-color: rgba(0,0,0,0.4); /* لون الخلفية مع الشفافية */
+}
+/* تنسيق محتوى الـ Dialog */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% من الأعلى ووسط الصفحة */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* عرض 80% من الشاشة */
+}
+/* زر إغلاق */
+.close {
+    color: #020202;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+   
+  align-items: start;
+}
+.close:hover,
+.close:focus {
+    color: rgb(244, 5, 5);
+    text-decoration: none;
+    cursor: pointer;
+ 
+  
+}

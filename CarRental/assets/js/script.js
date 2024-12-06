@@ -1,11 +1,74 @@
 
 
-
+    // ******** Start Events ********* //
 let btnUpdate = document.getElementById('btn-Update2');
 btnUpdate.addEventListener('click',UpdatcustomerData);
 
 let btnAdd = document.getElementById('btn-AddNew');
 btnAdd.addEventListener('click', AddNewRequest);
+
+
+document.getElementById('endDate').addEventListener('change', function() {
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(this.value);
+
+    // التأكد من أن تاريخ البدء وتاريخ الانتهاء صالحان
+    if (startDate && endDate && endDate >= startDate) {
+        // حساب الفرق بالأيام
+        const timeDiff = endDate - startDate; // الفرق بالمللي ثانية
+        const initialRentalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // تحويل إلى أيام
+
+        // تحديث حقل عدد الأيام
+        document.getElementById('initialRentalDays').value = initialRentalDays;
+    } else {
+        document.getElementById('initialRentalDays').value = 0; // إعادة تعيين إذا كان التاريخ غير صالح
+    }
+});
+
+
+document.getElementById('rentalPricePerDay').addEventListener('input',function(){
+
+    const RenatlDays = document.getElementById('initialRentalDays').value;
+     
+     const initialTotalDueAmount =   this.value * RenatlDays ;
+     
+     document.getElementById('initialTotalDueAmount').value = initialTotalDueAmount;
+     
+
+
+})
+
+
+  
+$('.landing').slick(
+    {
+        dots: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+
+    }
+);
+
+
+
+
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 3000); // Change image every 2 seconds
+}
+
+
+         // ******** End Events ********* //
 
 // let btnbooking = document.getElementById('btn-Addbooking');
   
@@ -96,40 +159,13 @@ btnAdd.addEventListener('click', AddNewRequest);
 //   getAllCars();
   
   
-  
-  $('.landing').slick(
-      {
-          dots: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-  
-      }
-  );
-  
 
-  
-  
-  var myIndex = 0;
-  carousel();
-  
-  function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-      x[i].style.display = "none";  
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}    
-    x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 3000); // Change image every 2 seconds
-  }
-  
 
 
 
     function GetAllCustomer() {
         let request = new XMLHttpRequest();
-        request.open("GET", "https://localhost:7068/api/Customer");
+        request.open("GET", "https://localhost:7132/api/Customer");
         request.responseType = "json";
         request.send();
     
@@ -143,14 +179,14 @@ btnAdd.addEventListener('click', AddNewRequest);
                 for (const item of Customers) {
                     // الحصول على بيانات العنصر
                     const tr = `
-                        <tr>
+                        <tr >
                            <td>
-                                <button class="btn btn-primary" onclick="getCustomerData(${item['customerId']})">Update</button>
+                                <button class="btn btn-primary p-1" onclick="getCustomerData(${item['customerId']})">Update</button>
                             </td>
                             <td>
-                                <button class="btn btn-primary bg-dark" onclick="DeleteRequest(${item['customerId']})">Delete</button>
+                                <button class="btn btn-primary bg-dark p-1" onclick="DeleteRequest(${item['customerId']})">Delete</button>
                             </td>
-                            <td>${item['customerId']}</td>
+                            <td >${item['customerId']}</td>
                             <td>${item['name']}</td>
                             <td>${item['nationalId']}</td>
                             <td>${item['address']}</td>
@@ -179,10 +215,11 @@ btnAdd.addEventListener('click', AddNewRequest);
     
 
     
- 
+
+    
     function GetAllBookings() {
         let request = new XMLHttpRequest();
-        request.open("GET", "https://localhost:7068/api/Booking");
+        request.open("GET", "https://localhost:7132/api/Booking");
         request.responseType = "json";
         request.send();
     
@@ -190,19 +227,23 @@ btnAdd.addEventListener('click', AddNewRequest);
             let Bookings = request.response;
     
             if (request.status >= 200 && request.status < 300) {
-              
-                $("#Mytable2 .tbody tr").empty(); 
+                // إزالة الصفوف السابقة
+                $("#Mytable2 .tbody").empty(); 
+    
                 for (const booking of Bookings) {
                     // إنشاء صف جديد لكل حجز
                     let row = `
-                        <tr>
-                         <td>
-                                <button class="btn btn-primary" onclick="updateBooking(${booking.bookingId})">Update</button>
+                        <tr style="margin:5px">
+                            <td>
+                                <button class="btn btn-primary p-1" onclick="updateBooking(${booking.bookingId})">Update</button>
                             </td>
                             <td>
-                                <button class="btn btn-primary bg-dark" onclick="deleteBooking(${booking.bookingId})">Delete</button>
+                                <button class="btn btn-primary bg-dark p-1" onclick="deleteBooking(${booking.bookingId})">Delete</button>
                             </td>
-                            <td>${booking.bookingId}</td>
+                            <td>
+                                <button class="btn btn-success p-1" onclick="openTransactionModal(${booking.bookingId})">Transcate</button>
+                            </td>
+                            <td p-0>${booking.bookingId}</td>
                             <td>${booking.customerId}</td>
                             <td>${booking.vehicleId}</td>
                             <td>${booking.startDate}</td>
@@ -213,7 +254,6 @@ btnAdd.addEventListener('click', AddNewRequest);
                             <td>${booking.initialCheckNotes}</td>
                             <td>${booking.initialTotalDueAmount}</td>
                             <td>${booking.initialRentalDays}</td>
-                           
                         </tr>
                     `;
     
@@ -230,6 +270,109 @@ btnAdd.addEventListener('click', AddNewRequest);
         }
     }
     
+    // دالة لفتح نافذة الحوار
+    function openTransactionModal(bookingId) {
+        // هنا يمكنك ضبط محتوى النافذة بناءً على bookingId إذا لزم الأمر
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        
+        document.getElementById("bookingId").value = bookingId;
+        document.getElementById("transactionDate").value =   new Date().toISOString().split('T')[0];;
+        document.getElementById("updatedTransactionDate").value =  new Date().toISOString().split('T')[0];
+        // فتح النافذة
+    
+        // يمكنك إضافة كود هنا لتحديث محتوى النافذة بناءً على bookingId
+    }
+    
+    // دالة لإغلاق نافذة الحوار
+    function closeTransactionModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none"; // إغلاق النافذة
+    }
+    
+    // إضافة حدث لإغلاق النافذة عند الضغط على زر الإغلاق
+    var span = document.getElementsByClassName("close")[1];
+    span.onclick = function() {
+        closeTransactionModal();
+    }
+    
+    // إغلاق النافذة عند الضغط خارجها
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            closeTransactionModal();
+        }
+    }
+//     function GetAllBookings() {
+//         let request = new XMLHttpRequest();
+//         request.open("GET", "https://localhost:7068/api/Booking");
+//         request.responseType = "json";
+//         request.send();
+    
+//         request.onload = function() {
+//             let Bookings = request.response;
+    
+//             if (request.status >= 200 && request.status < 300) {
+              
+//                 // var btnTr = document.getElementById("btn-Transacte");
+
+// var modal = document.getElementById("myModal");
+// // var btn = document.getElementById("btnAddTrasaction");
+// // var span = document.getElementsByClassName("close")[0];
+
+// // عند الضغط على الزر، افتح الـ Dialog
+// // btnTr.onclick = function() {
+// //     modal.style.display = "block";
+// // }
+
+// // // عند الضغط على زر الإغلاق، أغلق الـ Dialog
+// // span.onclick = function() {
+// //     modal.style.display = "none";
+// // }
+//                 $("#Mytable2 .tbody tr").empty(); 
+//                 for (const booking of Bookings) {
+//                     // إنشاء صف جديد لكل حجز
+//                     let row = `
+//                         <tr>
+//                          <td>
+//                                 <button class="btn btn-primary" onclick="updateBooking(${booking.bookingId})">Update</button>
+//                             </td>
+//                             <td>
+//                                 <button class="btn btn-primary bg-dark" onclick="deleteBooking(${booking.bookingId})">Delete</button>
+//                             </td>
+
+//                             <td>
+//                                 <button id="btn-Transacte" class="btn btn-primary" onclick="${modal.style.display = "block"}" >Transcate</button>
+//                             </td>
+//                             <td>${booking.bookingId}</td>
+//                             <td>${booking.customerId}</td>
+//                             <td>${booking.vehicleId}</td>
+//                             <td>${booking.startDate}</td>
+//                             <td>${booking.endDate}</td>
+//                             <td>${booking.pickUpLocation}</td>
+//                             <td>${booking.dropOffLocation}</td>
+//                             <td>${booking.rentalPricePerDay}</td>
+//                             <td>${booking.initialCheckNotes}</td>
+//                             <td>${booking.initialTotalDueAmount}</td>
+//                             <td>${booking.initialRentalDays}</td>
+                           
+//                         </tr>
+//                     `;
+    
+//                     // إضافة الصف إلى tbody
+//                     $("#Mytable2 .tbody").append(row); // إضافة الصف إلى tbody
+//                 }
+
+    
+//                 // تهيئة DataTables بعد إضافة الصفوف
+//                 $("#Mytable2").DataTable(); // تأكد من أن DataTables تم تهيئته بشكل صحيح
+    
+//             } else {
+//                 window.alert("There is an error in the server");
+//             }
+//         }
+//     }
+    
     // استدعاء الدالة لجلب البيانات
     GetAllBookings();
   
@@ -241,7 +384,7 @@ btnAdd.addEventListener('click', AddNewRequest);
 
     function DeleteRequest(id) {
       request = new XMLHttpRequest();
-      request.open("Delete","https://localhost:7068/api/Customer/"+id)
+      request.open("Delete","https://localhost:7132/api/Customer/"+id)
       request.responseType = "json"
       request.setRequestHeader("Accept","Application/json");
         request.setRequestHeader("Content-Type","application/json")
@@ -275,7 +418,7 @@ btnAdd.addEventListener('click', AddNewRequest);
 
     function getCustomerData(id) {
       let request = new XMLHttpRequest();
-      request.open("GET", "https://localhost:7068/api/Customer/"+id); // استبدل 1 بمعرف العميل المطلوب
+      request.open("GET", "https://localhost:7132/api/Customer/"+id); // استبدل 1 بمعرف العميل المطلوب
       request.responseType = "json";
       request.send();
   
@@ -319,7 +462,7 @@ function AddNewRequest() {
   }
 
   let request = new XMLHttpRequest();
-  request.open("POST", "https://localhost:7068/api/Customer");
+  request.open("POST", "https://localhost:7132/api/Customer");
   request.responseType = 'json';
   request.setRequestHeader("Accept", "application/json");
   request.setRequestHeader("Content-Type", "application/json");
@@ -358,47 +501,13 @@ function AddNewRequest() {
 
 
   
-function GetRequestByFilerting(id )
-{
-  
-  
-let request= new XMLHttpRequest()
-request.open("Get","http://localhost:5082/api/Customer/"+id)
-request.responseType ="json"
-request.send();
 
-
-
-request.onload = function()
-{
-  let pro = request.response
-    
-   if (request.status >= 200 && request.status < 300)
-   {
-     
-
- 
-        document.getElementById('title').value = pro.name;
-       document.getElementById('price').value = pro.age;
-        document.getElementById('taxes').value = pro.grades;
-
-      console.log( pro.name , pro.age , pro.grades)
-
-   }
-   else{
-
-    window.alert(" There is Error in  Server");
-   }
-
-}
-
-}
     
 
 
 
 function getAllCars() {
-    return fetch('https://localhost:7068/api/Car')
+    return fetch('https://localhost:7132/api/Vehicle')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -418,14 +527,14 @@ function getAllCars() {
                 <p class="m-1">mileage: ${car.mileage}</p>
                 <span>Is Available? ${car.isAvailable ? 'yes' : 'no'}</span>
                 <div>Price: ${car.rentalPricePerDay}</div>
-              <button id="btn-Addbooking" onclick="ShowAndHideBookingForm()" class="btn btn-primary">Rent</button>
+              <button id="btn-Addbooking" onclick="openBookingFrom(${car.vehicleID})" class="btn btn-primary">Rent</button>
             </div>
           `;
           $('.main-slider').append(slider);
         }
   
         $('.main-slider').slick({
-                        dots: true,
+                        dots: false,
                         slidesToShow: 4,
                         slidesToScroll: 1,
                         responsive: [
@@ -463,11 +572,45 @@ function getAllCars() {
 
 
 
+getAllCars();
+
+function openBookingFrom(VehicleID) {
+    // هنا يمكنك ضبط محتوى النافذة بناءً على bookingId إذا لزم الأمر
+    var modal = document.getElementById("bookingForm");
+    modal.style.display = "block";
+    
+    // document.getElementById("bookingForm").value = VehicleID;
+    document.getElementById("vehicleId").value = VehicleID;
+     document.getElementById("startDate").value =   new Date().toISOString().split('T')[0];;
+    // document.getElementById("updatedTransactionDate").value =  new Date().toISOString().split('T')[0];
+    // فتح النافذة
+
+    // يمكنك إضافة كود هنا لتحديث محتوى النافذة بناءً على bookingId
+}
+
+
+function closeBookingModal() {
+    var modal = document.getElementById("bookingForm");
+    modal.style.display = "none"; // إغلاق النافذة
+}
+
+// إضافة حدث لإغلاق النافذة عند الضغط على زر الإغلاق
+var span = document.getElementsByClassName("close")[0];
+span.onclick = function() {
+    closeBookingModal();
+}
+
+// إغلاق النافذة عند الضغط خارجها
+window.onclick = function(event) {
+    var modal = document.getElementById("Mytable3");
+    if (event.target == modal) {
+        closeBookingModal();
+    }
+}
 
 
 
 
- getAllCars();
 
 
 
@@ -496,7 +639,7 @@ function getAllCars() {
   function UpdatcustomerData()
   {
     let request = new XMLHttpRequest();
-    request.open("PUT", "https://localhost:7068/api/Customer");
+    request.open("PUT", "https://localhost:7132/api/Customer");
     request.responseType = "json";
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
@@ -542,19 +685,19 @@ function getAllCars() {
  
 
 
- function ShowAndHideBookingForm() {
+//  function ShowAndHideBookingForm() {
 
-    const form = document.getElementById('bookingForm');
-    if (form.style.display ==='none' || form.style.display === '') {
-        form.style.display = 'flex'; 
+//     const form = document.getElementById('bookingForm');
+//     if (form.style.display ==='none' || form.style.display === '') {
+//         form.style.display = 'flex'; 
          
       
-    } else {
-        form.style.display = 'none'; // إخفاء النموذج
+//     } else {
+//         form.style.display = 'none'; // إخفاء النموذج
         
-    }
+//     }
 
-}
+// }
     
     
   
@@ -562,3 +705,145 @@ function getAllCars() {
 $(document).ready(function(){
 $("#Table1").dataTable();
 })
+
+
+// let  endDateinput = document.getElementById('endDate');
+
+//  endDateinput.addEventListener('click',function(event){
+
+//  })
+
+
+
+function AddNewBooking(){
+    const bookingData = {
+        customerId: document.getElementById('customerId').value,
+        vehicleId: document.getElementById('vehicleId').value,
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
+        pickUpLocation: document.getElementById('pickUpLocation').value,
+        dropOffLocation: document.getElementById('dropOffLocation').value,
+        rentalPricePerDay: document.getElementById('rentalPricePerDay').value,
+        initialCheckNotes: document.getElementById('initialCheckNotes').value,
+        initialTotalDueAmount: document.getElementById('initialTotalDueAmount').value,
+        initialRentalDays: document.getElementById('initialRentalDays').value
+        //  initialRentalDays : endDate.value - startDate.value,
+        //  initialTotalDueAmount: initialRentalDays * rentalPricePerDay
+    };
+
+    if (!customerId || !vehicleId || !startDate || !endDate || !pickUpLocation || !dropOffLocation
+        || !rentalPricePerDay || !initialCheckNotes || !initialTotalDueAmount || !initialRentalDays
+    ) {
+        alert("Please fill in all required fields.");
+        return; // إيقاف التنفيذ إذا كانت هناك حقول فارغة
+    }
+
+    // إرسال البيانات إلى واجهة برمجة التطبيقات
+    fetch('https://localhost:7132/api/Booking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingData) // تحويل البيانات إلى JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // تحويل الاستجابة إلى JSON
+    })
+    .then(data => {
+       
+        console.log('Success:', data); // التعامل مع البيانات المستلمة
+        console.log(data.bookingId)
+    //    window.alert("Added Booking Successfuly");
+       window.alert("Added Booking Successfully with ID: " + data.bookingId);
+       // يمكنك إضافة كود هنا لإظهار رسالة نجاح أو إعادة توجيه المستخدم
+    })
+    .catch((error) => {
+        
+        console.error('Error:', error); // التعامل مع الأخطاء
+       window.alert("Added Booking Failed");
+        // يمكنك إضافة كود هنا لإظهار رسالة خطأ للمستخدم
+    });
+}
+
+
+// document.getElementById('bookingForm').addEventListener('submit',AddNewBooking)
+document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // منع إعادة تحميل الصفحة
+
+    // جمع البيانات من النموذج
+    const bookingData = {
+        customerId: document.getElementById('customerId').value,
+        vehicleId: document.getElementById('vehicleId').value,
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
+        pickUpLocation: document.getElementById('pickUpLocation').value,
+        dropOffLocation: document.getElementById('dropOffLocation').value,
+        rentalPricePerDay: document.getElementById('rentalPricePerDay').value,
+        initialCheckNotes: document.getElementById('initialCheckNotes').value,
+        initialTotalDueAmount: document.getElementById('initialTotalDueAmount').value,
+        initialRentalDays: document.getElementById('initialRentalDays').value
+       
+    };
+
+   
+    if (!customerId || !vehicleId || !startDate || !endDate || !pickUpLocation || !dropOffLocation
+        || !rentalPricePerDay || !initialCheckNotes || !initialTotalDueAmount || !initialRentalDays
+    ) {
+        alert("Please fill in all required fields.");
+        return; // إيقاف التنفيذ إذا كانت هناك حقول فارغة
+    }
+
+    // إرسال البيانات إلى واجهة برمجة التطبيقات
+    fetch('https://localhost:7068/api/Booking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingData) // تحويل البيانات إلى JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // تحويل الاستجابة إلى JSON
+    })
+    .then(data => {
+        console.log('Success:', data); // التعامل مع البيانات المستلمة
+       window.alert("Added Booking Successfuly ["+data.bookingId+"]" );
+       console.log(data.bookingId)
+       location.reload();
+      
+       // يمكنك إضافة كود هنا لإظهار رسالة نجاح أو إعادة توجيه المستخدم
+    })
+    .catch((error) => {
+        
+        console.error('Error:', error); // التعامل مع الأخطاء
+       window.alert("Added Booking Failed");
+        // يمكنك إضافة كود هنا لإظهار رسالة خطأ للمستخدم
+    });
+});
+
+
+
+
+
+
+// test //
+// var btnTr = document.getElementById("btn-Transacte");
+
+//  var modal = document.getElementById("myModal");
+// // var btn = document.getElementById("btnAddTrasaction");
+//  var span = document.getElementsByClassName("close")[0];
+
+// // // عند الضغط على الزر، افتح الـ Dialog
+// // btnTr.onclick = function() {
+// //     modal.style.display = "block";
+// // }
+
+// // // عند الضغط على زر الإغلاق، أغلق الـ Dialog
+// span.onclick = function() {
+//     modal.style.display = "none";
+// }

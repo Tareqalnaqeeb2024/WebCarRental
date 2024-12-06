@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,121 +9,91 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
     <title>Cars</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background-color: #f4f4f4;
+          margin: 0;
+      }
+      .login-container {
+          background-color: white;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          width: 300px; /* عرض ثابت للنموذج */
+      }
+      .form-group {
+          margin-bottom: 15px;
+      }
+      label {
+          display: block;
+          margin-bottom: 5px;
+      }
+      input {
+          width: 100%;
+          padding: 8px;
+          box-sizing: border-box;
+      }
+      button {
+          padding: 10px 15px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          cursor: pointer;
+          width: 100%; /* جعل الزر بعرض النموذج */
+      }
+      button:hover {
+          background-color: #218838;
+      }
+  </style>
 </head>
 <body>
 
+
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">اسم المستخدم:</label>
+            <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit">تسجيل الدخول</button>
+    </form>
+</div>
+
+
     
-   
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="./assets/img/logo2.png" width="100px" height="100px" alt="Site Logo "srcset="">
-        <span class="text-logo">T Cars </span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Customers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Cars.html">Cars</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Boohings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Recoreds</a>
-          </li>
-         
-        </ul>
-      </div>
-    </div>
-  </nav>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // منع إعادة تحميل الصفحة
+
+      // جمع بيانات تسجيل الدخول
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // هنا يمكنك إضافة كود للتحقق من بيانات تسجيل الدخول
+      // على سبيل المثال، يمكنك استخدام fetch لإرسال البيانات إلى الخادم
+
+      // مثال على التحقق من بيانات تسجيل الدخول
+      if (username === "admin" && password === "password") {
+          // إذا كانت بيانات تسجيل الدخول صحيحة، قم بتحويل المستخدم إلى الموقع
+          window.location.href = "index.html"; // استبدل هذا بالرابط الفعلي لموقعك
+      } else {
+          alert("اسم المستخدم أو كلمة المرور غير صحيحة.");
+      }
+  });
+</script>
+ 
 
 
-  
-
-<!-- 
-  <div class="card"  style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      
-    </div>
-  </div> -->
-
-  <!-- Cards Cars -->
-
-  <div class="container">
-    <div class="Silder">
-    <!-- <div class="row"> -->
-      <div class="col-lg-8">
-        One of three      
-        <div class="card"  style="width: 12rem;">
-         <img src="..." class="card-img-top" alt="...">
-         <div class="card-body">
-       <h5 class="card-title">Card title</h5>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-      </div>
-      <div class="col-lg-8">
-        One of three      
-        <div class="card"  style="width: 12rem;">
-         <img src="..." class="card-img-top" alt="...">
-         <div class="card-body">
-       <h5 class="card-title">Card title</h5>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-      </div>
-      <div class="col-lg-8">
-        One of three      
-        <div class="card"  style="width: 12rem;">
-         <img src="..." class="card-img-top" alt="...">
-         <div class="card-body">
-       <h5 class="card-title">Card title</h5>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-      </div>
-
-      <div class="col-lg-8">
-        One of three      
-        <div class="card"  style="width: 12rem;">
-         <img src="..." class="card-img-top" alt="...">
-         <div class="card-body">
-       <h5 class="card-title">Card title</h5>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-      </div>
-
-      <div class="col-lg-8">
-        One of three      
-        <div class="card"  style="width: 12rem;">
-         <img src="..." class="card-img-top" alt="...">
-         <div class="card-body">
-       <h5 class="card-title">Card title</h5>
-       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
-      </div>
-    </div>
-  </div>
-  </div> -->
-
-<!-- 
 
   <script
   src="https://code.jquery.com/jquery-3.7.1.js"
@@ -134,4 +104,4 @@
 <script type="text/javascript" src="slick/slick.min.js"></script>
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> -->
+</html>
